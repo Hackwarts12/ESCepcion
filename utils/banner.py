@@ -19,6 +19,6 @@ def print_banner():
 
 {Style.RESET_ALL}
 {Fore.CYAN}   Active Directory Certificate Services Auditor — ESCepcion v1.0{Style.RESET_ALL}
-{Fore.CYAN}               Developed by [Company Name] ([Author Name]){Style.RESET_ALL}
+{Fore.CYAN}   Developed by [Red Spear Labs] ([Author emaldonado/Hackwarts12]){Style.RESET_ALL}
 """
     print(banner)
