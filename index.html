@@ -5,54 +5,307 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:;">
-    <title>ESCepcion - Security Tools</title>
+    <title>ESCepcion - Audit your AD like a wizard</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <canvas id="particles"></canvas>
+    
     <header>
-        <nav>
+        <nav class="navbar">
             <div class="container">
-                <h1>ESCepcion</h1>
-                <ul>
-                    <li><a href="#home">Inicio</a></li>
-                    <li><a href="#tools">Herramientas</a></li>
-                    <li><a href="#about">Acerca de</a></li>
+                <div class="logo">
+                    <svg class="logo-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <path d="M50 20 L50 80 M20 50 L80 50" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="50" cy="35" r="8" fill="currentColor"/>
+                        <path d="M35 50 Q50 65 65 50" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <text x="50" y="75" text-anchor="middle" font-size="20" fill="currentColor">ESC</text>
+                    </svg>
+                    <span class="logo-text">ESCepcion</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#escs">ESCs</a></li>
+                    <li><a href="#install">Install</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how">How it Works</a></li>
+                    <li><a href="#changelog">Changelog</a></li>
                 </ul>
             </div>
         </nav>
     </header>
 
     <main>
-        <section id="home" class="hero">
+        <section id="hero" class="hero">
             <div class="container">
-                <h2>Bienvenido a ESCepcion</h2>
-                <p>Plataforma segura para herramientas de seguridad</p>
-            </div>
-        </section>
-
-        <section id="tools" class="tools-section">
-            <div class="container">
-                <h2>Herramientas Disponibles</h2>
-                <div class="tools-grid">
-                    <div class="tool-card">
-                        <h3>Tool Placeholder</h3>
-                        <p>Descripción de la herramienta</p>
+                <div class="hero-content">
+                    <h1 class="glitch" data-text="ESCepcion">ESCepcion</h1>
+                    <p class="tagline">Audit your AD like a wizard</p>
+                    <p class="hero-description">
+                        Herramienta mágica para auditoría de Active Directory. Detecta y explota vulnerabilidades ESC con el poder de la arcana digital.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#install" class="btn btn-primary">
+                            <span>Get Started</span>
+                        </a>
+                        <a href="https://github.com/Hackwarts12/ESCepcion" class="btn btn-secondary" target="_blank">
+                            <span>View on GitHub</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <span class="terminal-dot red"></span>
+                        <span class="terminal-dot yellow"></span>
+                        <span class="terminal-dot green"></span>
+                    </div>
+                    <div class="terminal-body">
+                        <p><span class="prompt">$</span> python escepcion.py --scan</p>
+                        <p class="output">[+] Scanning Active Directory...</p>
+                        <p class="output success">[✓] ESC1 vulnerability detected!</p>
+                        <p class="output success">[✓] ESC2 vulnerability detected!</p>
+                        <p class="output">[+] Generating exploit...</p>
+                        <p class="cursor">_</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="about" class="about-section">
+        <section id="escs" class="escs-section">
             <div class="container">
-                <h2>Acerca de</h2>
-                <p>ESCepcion es una plataforma segura para herramientas de seguridad.</p>
+                <h2 class="section-title">Supported ESC Vulnerabilities</h2>
+                <p class="section-subtitle">All known Active Directory Certificate Services escalation paths</p>
+                <div class="escs-grid">
+                    <div class="esc-card" data-esc="1">
+                        <div class="esc-number">ESC1</div>
+                        <h3>Misconfigured Certificate Templates</h3>
+                        <p>Exploits templates with ENROLLEE_SUPPLIES_SUBJECT flag</p>
+                    </div>
+                    <div class="esc-card" data-esc="2">
+                        <div class="esc-number">ESC2</div>
+                        <h3>Any Purpose EKU</h3>
+                        <p>Certificates with Any Purpose or no EKU restrictions</p>
+                    </div>
+                    <div class="esc-card" data-esc="3">
+                        <div class="esc-number">ESC3</div>
+                        <h3>Enrollment Agent Templates</h3>
+                        <p>Certificate Request Agent abuse for privilege escalation</p>
+                    </div>
+                    <div class="esc-card" data-esc="4">
+                        <div class="esc-number">ESC4</div>
+                        <h3>Vulnerable ACLs</h3>
+                        <p>Weak permissions on certificate templates</p>
+                    </div>
+                    <div class="esc-card" data-esc="5">
+                        <div class="esc-number">ESC5</div>
+                        <h3>PKI Object ACLs</h3>
+                        <p>Vulnerable permissions on PKI objects</p>
+                    </div>
+                    <div class="esc-card" data-esc="6">
+                        <div class="esc-number">ESC6</div>
+                        <h3>EDITF_ATTRIBUTESUBJECTALTNAME2</h3>
+                        <p>CA configuration allowing SAN specification</p>
+                    </div>
+                    <div class="esc-card" data-esc="7">
+                        <div class="esc-number">ESC7</div>
+                        <h3>Vulnerable CA ACLs</h3>
+                        <p>Weak permissions on Certificate Authority</p>
+                    </div>
+                    <div class="esc-card" data-esc="8">
+                        <div class="esc-number">ESC8</div>
+                        <h3>NTLM Relay to AD CS</h3>
+                        <p>HTTP enrollment endpoints vulnerable to relay</p>
+                    </div>
+                    <div class="esc-card" data-esc="9">
+                        <div class="esc-number">ESC9</div>
+                        <h3>No Security Extension</h3>
+                        <p>CT_FLAG_NO_SECURITY_EXTENSION flag abuse</p>
+                    </div>
+                    <div class="esc-card" data-esc="10">
+                        <div class="esc-number">ESC10</div>
+                        <h3>Weak Certificate Mappings</h3>
+                        <p>Vulnerable certificate authentication mappings</p>
+                    </div>
+                    <div class="esc-card" data-esc="11">
+                        <div class="esc-number">ESC11</div>
+                        <h3>IF_ENFORCEENCRYPTICERTREQUEST</h3>
+                        <p>Relay attacks via RPC certificate enrollment</p>
+                    </div>
+                    <div class="esc-card" data-esc="13">
+                        <div class="esc-number">ESC13</div>
+                        <h3>Issuance Policy Abuse</h3>
+                        <p>OID group link vulnerabilities</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="install" class="install-section">
+            <div class="container">
+                <h2 class="section-title">Quick Start</h2>
+                <div class="install-grid">
+                    <div class="install-card">
+                        <div class="step-number">01</div>
+                        <h3>Clone Repository</h3>
+                        <div class="code-block">
+                            <code>git clone https://github.com/Hackwarts12/ESCepcion.git</code>
+                        </div>
+                    </div>
+                    <div class="install-card">
+                        <div class="step-number">02</div>
+                        <h3>Install Dependencies</h3>
+                        <div class="code-block">
+                            <code>cd ESCepcion && pip install -r requirements.txt</code>
+                        </div>
+                    </div>
+                    <div class="install-card">
+                        <div class="step-number">03</div>
+                        <h3>Run ESCepcion</h3>
+                        <div class="code-block">
+                            <code>python escepcion.py --scan --target domain.local</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features-section">
+            <div class="container">
+                <h2 class="section-title">Arcane Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔮</div>
+                        <h3>Automated Detection</h3>
+                        <p>Automatically scans and identifies all ESC vulnerabilities in your Active Directory environment</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Exploit Generation</h3>
+                        <p>Generates ready-to-use exploits for detected vulnerabilities with detailed instructions</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🛡️</div>
+                        <h3>Remediation Guidance</h3>
+                        <p>Provides step-by-step remediation recommendations for each vulnerability found</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Detailed Reports</h3>
+                        <p>Comprehensive HTML and JSON reports with risk scoring and prioritization</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Stealth Mode</h3>
+                        <p>Low-noise scanning techniques to avoid detection by security monitoring tools</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔗</div>
+                        <h3>Chain Attacks</h3>
+                        <p>Identifies and chains multiple vulnerabilities for maximum impact scenarios</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="how" class="how-section">
+            <div class="container">
+                <h2 class="section-title">How It Works</h2>
+                <div class="workflow">
+                    <div class="workflow-step">
+                        <div class="workflow-number">1</div>
+                        <div class="workflow-content">
+                            <h3>Reconnaissance</h3>
+                            <p>ESCepcion connects to your AD environment and enumerates all Certificate Services infrastructure</p>
+                        </div>
+                    </div>
+                    <div class="workflow-arrow">→</div>
+                    <div class="workflow-step">
+                        <div class="workflow-number">2</div>
+                        <div class="workflow-content">
+                            <h3>Analysis</h3>
+                            <p>Analyzes certificate templates, CA configurations, and ACLs to identify misconfigurations</p>
+                        </div>
+                    </div>
+                    <div class="workflow-arrow">→</div>
+                    <div class="workflow-step">
+                        <div class="workflow-number">3</div>
+                        <div class="workflow-content">
+                            <h3>Exploitation</h3>
+                            <p>Generates proof-of-concept exploits and provides detailed attack paths</p>
+                        </div>
+                    </div>
+                    <div class="workflow-arrow">→</div>
+                    <div class="workflow-step">
+                        <div class="workflow-number">4</div>
+                        <div class="workflow-content">
+                            <h3>Reporting</h3>
+                            <p>Delivers comprehensive reports with remediation steps and risk assessments</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contributors" class="contributors-section">
+            <div class="container">
+                <h2 class="section-title">Contributors & Credits</h2>
+                <div class="credits-content">
+                    <p>ESCepcion is built upon the research and tools from the security community:</p>
+                    <ul class="credits-list">
+                        <li><strong>Will Schroeder & Lee Christensen</strong> - Original ESC research (SpecterOps)</li>
+                        <li><strong>Certipy</strong> - Inspiration for AD CS auditing techniques</li>
+                        <li><strong>Certify</strong> - Certificate template enumeration methods</li>
+                        <li><strong>The Security Community</strong> - Continuous research and improvements</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="changelog" class="changelog-section">
+            <div class="container">
+                <h2 class="section-title">Changelog</h2>
+                <div class="changelog-timeline">
+                    <div class="changelog-item">
+                        <div class="changelog-date">v1.0.0 - 2026-06-27</div>
+                        <div class="changelog-content">
+                            <h3>Initial Release</h3>
+                            <ul>
+                                <li>Support for ESC1-ESC11 and ESC13 detection</li>
+                                <li>Automated exploit generation</li>
+                                <li>HTML and JSON reporting</li>
+                                <li>Stealth scanning capabilities</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 ESCepcion. Todos los derechos reservados.</p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>ESCepcion</h4>
+                    <p>Audit your AD like a wizard</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links</h4>
+                    <ul>
+                        <li><a href="https://github.com/Hackwarts12/ESCepcion" target="_blank">GitHub</a></li>
+                        <li><a href="#changelog">Releases</a></li>
+                        <li><a href="#install">Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <p>For authorized security testing only. Use responsibly.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ESCepcion. Licensed under MIT.</p>
+            </div>
         </div>
     </footer>
 
