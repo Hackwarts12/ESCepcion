@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESCepcion Risk Model</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="particles"></div>
+
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <img src="logo.png" alt="ESCepcion" class="logo-icon-nav">
+                    <span class="logo-text">ESCepcion</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html#hero">Home</a></li>
+                    <li><a href="index.html#escs">ESCs</a></li>
+                    <li><a href="index.html#install">Install</a></li>
+                    <li><a href="index.html#features">Features</a></li>
+                    <li><a href="index.html#how">How it Works</a></li>
+                    <li><a href="index.html#changelog">Changelog</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <a href="https://github.com/Hackwarts12/ESCepcion" target="_blank" class="github-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                        </svg>
+                        GitHub
+                    </a>
+                    <a href="https://ko-fi.com/hackwarts12" target="_blank" class="kofi-link">
+                        🍺 Dona una cerveza
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="hero risk-model-hero">
+            <div class="risk-model-grid">
+                    <div class="risk-model-content">
+                        <p style="color: var(--text-muted); margin-bottom: 1rem;">
+                            <a href="index.html" style="color: var(--secondary); text-decoration: none;">ESCepcion</a> / Risk Model
+                        </p>
+                        <h1 class="glitch" data-text="ESCepcion Risk Model" style="font-size: clamp(40px, 7vw, 70px);">ESCepcion Risk Model</h1>
+                        <p class="tagline">Beyond CVSS — Understanding Real Domain Compromise Risk</p>
+                        <p class="hero-description">
+                            Traditional scanners assign severity scores to vulnerabilities in isolation. ESCepcion measures risk by what an attacker can actually reach from a standard domain user account — and maps every finding to a real identity impact level.
+                        </p>
+                        <div class="hero-buttons">
+                            <a href="index.html" class="btn btn-secondary">
+                                <span>← Back to ESCepcion</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="risk-model-image">
+                        <img src="risk-model-logo.png" alt="ESCepcion Risk Model Diagram" onerror="this.src='logo.png'">
+                    </div>
+            </div>
+        </section>
+
+        <section class="escs-section">
+            <div class="container">
+                <h2 class="section-title">The Problem with Isolated Scoring</h2>
+                <div style="max-width: 800px; margin: 0 auto; color: var(--text-muted); line-height: 1.8;">
+                    <p style="margin-bottom: 1.5rem;">CVSS scores a vulnerability in isolation. In Active Directory Certificate Services, isolation doesn't exist.</p>
+                    
+                    <p style="margin-bottom: 1.5rem;">ESC4 on a template that nobody can enroll in carries near-zero real risk. ESC4 on a published template with Domain Users enrollment rights and a two-hop path to Domain Admin is critical.</p>
+                    
+                    <p style="margin-bottom: 1.5rem;">Traditional scanners cannot tell the difference. ESCepcion can — and documents exactly why.</p>
+                    
+                    <p style="margin-bottom: 1rem; font-weight: 600; color: var(--text);">ESCepcion's risk model accounts for:</p>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border);">→ Is the template published in a CA?</li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border);">→ Can a low-trust user actually enroll?</li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border);">→ Is manager approval blocking exploitation?</li>
+                        <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border);">→ Does this finding connect to a privileged identity?</li>
+                        <li style="padding: 0.5rem 0;">→ What is the full step-by-step attack chain?</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <div class="container">
+                <h2 class="section-title">L1–L5 Identity Impact Taxonomy</h2>
+                <div class="escs-grid">
+                    <div class="esc-card">
+                        <div class="esc-number">L1</div>
+                        <span class="esc-badge" style="background: var(--border-mid); color: var(--text-muted);">WEAK AUTHENTICATION</span>
+                        <h3>Weak Authentication</h3>
+                        <p>The attacker obtains a valid certificate only for their own account. No privilege gain. No impersonation. Example: ESC9 detected but no GenericWrite available over any domain account.</p>
+                    </div>
+                    <div class="esc-card">
+                        <div class="esc-number">L2</div>
+                        <span class="esc-badge" style="background: oklch(70% 0.15 85); color: var(--bg);">LATERAL MOVEMENT</span>
+                        <h3>Lateral Movement Enablement</h3>
+                        <p>The attacker obtains a certificate for another low-privilege account or machine account. Limited pivot capability, no direct admin path. Example: ESC1 where enrollment is restricted to specific non-admin service accounts.</p>
+                    </div>
+                    <div class="esc-card">
+                        <div class="esc-number">L3</div>
+                        <span class="esc-badge" style="background: oklch(60% 0.15 40); color: var(--bg);">PRIVILEGED ACCESS</span>
+                        <h3>Privileged Account Access</h3>
+                        <p>The attacker obtains a certificate for a service account, admin workstation account, or account with local admin rights on critical servers. Example: ESC4 path to a Tier 1 admin account.</p>
+                    </div>
+                    <div class="esc-card">
+                        <div class="esc-number">L4</div>
+                        <span class="esc-badge critical">DOMAIN ADMIN</span>
+                        <h3>Domain Admin Path</h3>
+                        <p>The attacker obtains a TGT or NT hash for a Domain Admin, Enterprise Admin, or Domain Controller account. Full on-premises domain compromise. Example: ESC1 + low-trust enrollment → cert as DA. Example: Certifried → DC impersonation → DCSync.</p>
+                    </div>
+                    <div class="esc-card">
+                        <div class="esc-number">L5</div>
+                        <span class="esc-badge" style="background: oklch(40% 0.2 25); color: var(--bg);">AUTHORITY TAKEOVER</span>
+                        <h3>Authority Takeover</h3>
+                        <p>The attacker compromises the CA itself, gains the ability to forge arbitrary certificates, or achieves persistence that survives domain rebuilds. Example: ESC7 ManageCA → enable hidden template → forge cert → permanent backdoor. Example: ESC12 CA shell → export CA private key → forge any certificate indefinitely.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="how-section">
+            <div class="container">
+                <h2 class="section-title">The DDCC Engine</h2>
+                <p class="section-subtitle">Not all findings are equal. DDCC tells you which ones actually matter.</p>
+                <div style="max-width: 800px; margin: 2rem auto 3rem; color: var(--text-muted); line-height: 1.8; text-align: center;">
+                    <p>The DDCC is ESCepcion's proprietary attack graph engine. It takes all findings from a scan as input nodes, builds edges between findings that can be chained together, and evaluates whether a low-trust entry point has a real walk through the graph to an L4 or L5 impact node.</p>
+                    <p style="margin-top: 1rem;">The engine outputs one of three verdicts:</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔴</div>
+                        <h3>COMPROMISABLE</h3>
+                        <p>At least one deterministic path from a low-trust user to L4/L5 impact exists. The path is fully documented with step-by-step commands and the exact ESC findings involved.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🟡</div>
+                        <h3>NEAR MISS</h3>
+                        <p>A path exists but is blocked by a single prerequisite: manager approval active, template not published, GenericWrite unavailable, or StrongBinding enforced. One configuration change away from COMPROMISABLE.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🟢</div>
+                        <h3>SAFE</h3>
+                        <p>No path from any low-trust entry point to L4/L5 impact was found given the current configuration. This does NOT mean the environment is secure — it means the current combination of findings does not chain to full compromise.</p>
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 2rem; color: var(--text-muted); font-style: italic;">
+                    A domain with 15 ESC findings but no DDCC path is safer than a domain with 2 findings that chain directly to DCSync. DDCC is the metric that matters.
+                </p>
+            </div>
+        </section>
+
+        <section class="escs-section">
+            <div class="container">
+                <h2 class="section-title">Confidence Levels</h2>
+                <div class="install-grid" style="grid-template-columns: repeat(2, 1fr);">
+                    <div class="install-card">
+                        <h3>LDAP_ONLY</h3>
+                        <p>Detected using only LDAP attribute reads. Available without --deep-scan. False positive risk is low for most ESCs. Note: ESC9 and ESC10 cannot confirm StrongCertificateBindingEnforcement without registry access — StrongBinding is not readable as a low-priv user via LDAP.</p>
+                    </div>
+                    <div class="install-card">
+                        <h3>LDAP_PLUS_ACL</h3>
+                        <p>Detected via LDAP + security descriptor parsing. Requires resolving ACEs and SIDs including nested group membership up to depth 5 via BFS.</p>
+                    </div>
+                    <div class="install-card">
+                        <h3>LDAP_PLUS_REGISTRY</h3>
+                        <p>LDAP detects the condition; MS-RRP registry read confirms it. Requires --deep-scan and remote registry access to the CA or DC host.</p>
+                    </div>
+                    <div class="install-card">
+                        <h3>REGISTRY_DEEP_SCAN</h3>
+                        <p>Detectable only via MS-RRP registry read. Available exclusively with --deep-scan. Applies to: ESC10, ESC11, ESC16.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <div class="container">
+                <h2 class="section-title">Blocking Controls</h2>
+                <div style="max-width: 800px; margin: 0 auto 3rem; color: var(--text-muted); line-height: 1.8; text-align: center;">
+                    <p>Each finding includes the blocking controls currently preventing exploitation. A finding with blocking controls is NEAR_MISS or POTENTIAL — not SAFE. Removing any single blocking control may promote the finding to EXPLOITABLE.</p>
+                </div>
+                <div class="escs-grid">
+                    <div class="esc-card">
+                        <h3>NOT_PUBLISHED</h3>
+                        <p>Template exists in AD but is not listed in any CA's certificateTemplates attribute. Cannot be used to request certificates.</p>
+                    </div>
+                    <div class="esc-card">
+                        <h3>NO_LOWTRUST_ENROLL</h3>
+                        <p>No low-trust group (Domain Users, Authenticated Users, Everyone) has enrollment rights on the template.</p>
+                    </div>
+                    <div class="esc-card">
+                        <h3>MANAGER_APPROVAL</h3>
+                        <p>PEND_ALL_REQUESTS flag is active. All certificate requests require manual admin approval before issuance.</p>
+                    </div>
+                    <div class="esc-card">
+                        <h3>AUTH_SIGNATURES</h3>
+                        <p>Template requires authorized signatures from an enrollment agent before issuance.</p>
+                    </div>
+                    <div class="esc-card">
+                        <h3>STRONG_BINDING</h3>
+                        <p>StrongCertificateBindingEnforcement = 2 is confirmed on all DCs. Prevents ESC9/ESC10 exploitation.</p>
+                    </div>
+                    <div class="esc-card">
+                        <h3>NO_GENERICWRITE</h3>
+                        <p>No account has write permissions available for the attacker to modify UPN or DNS attributes. Required for ESC9 and ESC10 exploitation.</p>
+                    </div>
+                    <div class="esc-card">
+                        <h3>CA_PATCHED</h3>
+                        <p>CA server has the November 2024 patch for CVE-2024-49019 applied. Prevents ESC15 exploitation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="how-section">
+            <div class="container">
+                <h2 class="section-title">Posture Score</h2>
+                <div style="max-width: 800px; margin: 0 auto; color: var(--text-muted); line-height: 1.8;">
+                    <p style="margin-bottom: 2rem; text-align: center;">ESCepcion calculates a domain Posture Score from 0 to 100 based on the real exploitability of findings, not their count.</p>
+                    
+                    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; margin-bottom: 2rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
+                            <span style="font-weight: 600; color: var(--text);">100</span>
+                            <span>Perfect — no findings detected.</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
+                            <span style="font-weight: 600; color: var(--text);">75+</span>
+                            <span>Good — findings exist but DDCC shows no paths.</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
+                            <span style="font-weight: 600; color: var(--text);">50+</span>
+                            <span>Moderate — near miss paths present.</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);">
+                            <span style="font-weight: 600; color: var(--text);">25+</span>
+                            <span>Poor — exploitable paths confirmed.</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="font-weight: 600; color: var(--text);">0</span>
+                            <span>Critical — direct path from low-trust user to L5 Authority Takeover.</span>
+                        </div>
+                    </div>
+                    
+                    <p style="font-style: italic; text-align: center;">NOT_SCANNED findings do not count as safe. They represent unknown risk, not confirmed security. The score includes a small penalty for coverage gaps when --deep-scan was not used.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>ESCepcion</h4>
+                    <p>Audit your AD like a wizard</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem;">RedSpears Labs — Devel Security, S.A.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links</h4>
+                    <ul>
+                        <li><a href="https://github.com/Hackwarts12/ESCepcion" target="_blank">GitHub</a></li>
+                        <li><a href="index.html#changelog">Releases</a></li>
+                        <li><a href="index.html#install">Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <p>⚠️ For authorized security testing only.</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.85rem;">Use only in environments where you have explicit written authorization. Unauthorized use may be illegal.</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.85rem;">ESCepcion does not exploit, modify, or write to any Active Directory object. All operations are read-only LDAP queries and optional registry reads via MS-RRP.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ESCepcion. Licensed under MIT.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

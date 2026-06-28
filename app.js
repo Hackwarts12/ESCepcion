@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initSmoothScroll();
     initTerminalAnimation();
     initScrollAnimations();
+    initTimeline();
 });
 
 function initParticles() {
@@ -194,3 +195,63 @@ escCards.forEach(card => {
         this.style.transform = 'translateY(0) scale(1)';
     });
 });
+
+function initTimeline() {
+    const timelineNodes = document.querySelectorAll('.timeline-node');
+    const milestoneDetails = document.querySelectorAll('.milestone-detail');
+    
+    // Show milestone 11 (Oct 2026 - EkoParty v1.0) by default
+    const defaultMilestone = document.querySelector('.milestone-detail[data-milestone="11"]');
+    if (defaultMilestone) {
+        defaultMilestone.classList.add('active');
+    }
+    
+    timelineNodes.forEach(node => {
+        node.addEventListener('click', function() {
+            const milestoneId = this.getAttribute('data-milestone');
+            
+            // Remove active class from all nodes and details
+            timelineNodes.forEach(n => n.classList.remove('active'));
+            milestoneDetails.forEach(d => d.classList.remove('active'));
+            
+            // Add active class to clicked node
+            this.classList.add('active');
+            
+            // Show corresponding milestone detail
+            const targetDetail = document.querySelector(`.milestone-detail[data-milestone="${milestoneId}"]`);
+            if (targetDetail) {
+                targetDetail.classList.add('active');
+            }
+        });
+        
+        // Hover effect
+        node.addEventListener('mouseenter', function() {
+            if (!this.classList.contains('active')) {
+                this.style.transform = 'translateY(-5px)';
+            }
+        });
+        
+        node.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+    });
+}
+
+// Hamburger menu
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.querySelector('.nav-links');
+
+if (navToggle) {
+    navToggle.addEventListener('click', () => {
+        navToggle.classList.toggle('open');
+        navLinks.classList.toggle('open');
+    });
+
+    // Cerrar al hacer click en un link
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navToggle.classList.remove('open');
+            navLinks.classList.remove('open');
+        });
+    });
+}

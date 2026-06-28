@@ -10,3 +10,35 @@ build/
 *.pem
 secrets/
 config/secrets.json
+
+# --- Backend Ignored Files ---
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.pyo
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual env
+.venv/
+venv/
+ENV/
+
+# Local outputs / reports
+ESCepcion_Reporte_*.html
+ESCepcion_Reporte_*.json
+reportes_ddcc/ESCepcion_Reporte_*.html
+reportes_ddcc/ESCepcion_Reporte_*.json
+
+# Local logs
+tests.err
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

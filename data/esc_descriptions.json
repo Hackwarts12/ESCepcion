@@ -1,0 +1,57 @@
+{
+  "ESC1": {
+    "severity": "critical",
+    "description": "Permite a un usuario especificar el campo 'Subject' o 'SAN', posibilitando la suplantación de identidad de cuentas privilegiadas (por ejemplo, 'Administrator').",
+    "exploitation": "1. Identificar una plantilla vulnerable donde el campo 'Subject' o 'SAN' sea configurable.\n2. Solicitar un certificado suplantando una cuenta privilegiada:\n   certipy req -u user@domain -p pass -ca <CA> -template <template> -subject CN=Administrator\n3. Autenticarse usando el certificado emitido:\n   certipy auth -pfx user.pfx",
+    "mitigation": "Deshabilitar el flag 'ENROLLEE_SUPPLIES_SUBJECT', restringir el uso de EKUs de autenticación, y limitar los permisos de inscripción a cuentas de confianza. Verificar que solo administradores puedan modificar las plantillas."
+  },
+
+  "ESC2": {
+    "severity": "high",
+    "description": "Una plantilla AnyPurpose o sin EKU (Extended Key Usage) permite emitir certificados utilizables para múltiples propósitos, lo que facilita abuso de privilegios o suplantación de servicios.",
+    "exploitation": "1. Identificar plantillas con EKU AnyPurpose o sin EKU definidos.\n2. Solicitar un certificado de la plantilla y usarlo para autenticación, firma o cifrado en contextos no previstos.\n3. Ejemplo:\n   certipy req -u user@domain -p pass -ca <CA> -template <template>",
+    "mitigation": "Limitar las plantillas a EKUs específicos según el propósito (ClientAuth, ServerAuth, etc.) y evitar 'AnyPurpose'. Validar que las plantillas no se publiquen en el AD si no son necesarias."
+  },
+
+  "ESC3": {
+    "severity": "high",
+    "description": "Una plantilla con el EKU 'Certificate Request Agent' (Enrollment Agent) sin el flag 0x80 (CT_FLAG_NO_SECURITY_EXTENSION) permite inscribir certificados en nombre de otros usuarios.",
+    "exploitation": "1. Detectar plantillas con EKU 'Enrollment Agent'.\n2. Solicitar certificado para otro usuario:\n   certipy req -u user@domain -p pass -ca <CA> -template <template> -on-behalf-of Administrator\n3. Autenticarse usando el nuevo certificado emitido.",
+    "mitigation": "Configurar el flag 'CT_FLAG_NO_SECURITY_EXTENSION' (0x80) en la plantilla de Enrollment Agent. Limitar los permisos de inscripción solo a administradores o cuentas de servicio específicas."
+  },
+
+  "ESC4": {
+    "severity": "high",
+    "description": "Los permisos ACL permiten que usuarios no privilegiados (por ejemplo 'Domain Users') modifiquen las plantillas de certificados, lo que puede derivar en suplantación o elevación de privilegios.",
+    "exploitation": "1. Revisar ACLs con WRITE_DACL, WRITE_OWNER o WRITE_PROPERTY asignadas a grupos comunes.\n2. Modificar la plantilla para permitir 'ENROLLEE_SUPPLIES_SUBJECT' o agregar EKUs de autenticación.\n3. Solicitar un certificado con privilegios elevados.\n4. Ejemplo de abuso con certipy:\n   certipy req -u user@domain -p pass -ca <CA> -template <template>",
+    "mitigation": "Eliminar permisos de escritura a grupos no administrativos. Validar periódicamente los permisos de las plantillas mediante herramientas de auditoría (por ejemplo, ESCepcion o Certify)."
+  },
+
+  "ESC5": {
+    "severity": "medium",
+    "description": "El servicio de inscripción de la CA (CA Service) permite a usuarios no privilegiados solicitar certificados arbitrarios, exponiendo el servicio a abuso si se combinan otras debilidades (ESC1–ESC4).",
+    "exploitation": "1. Identificar CAs donde los permisos 'Manage CA' o 'Issue Certificates' estén asignados a grupos amplios.\n2. Usar la API de inscripción o certipy para solicitar certificados manualmente.\n3. Potencialmente abusar de plantillas vulnerables a través del CA Service.",
+    "mitigation": "Limitar el acceso al servicio de inscripción, restringir permisos de emisión ('Issue/Manage Certificates') y monitorear solicitudes inusuales de certificados en los logs de CA."
+  },
+
+  "ESC6": {
+    "severity": "medium",
+    "description": "Las CAs permiten la inscripción de certificados sin validar la publicación en AD ('No PUBLISH_TO_DS'), lo que puede facilitar persistencia o abuso de certificados no auditados.",
+    "exploitation": "1. Identificar plantillas con 'PUBLISH_TO_DS' deshabilitado.\n2. Solicitar certificados manualmente y usarlos para autenticación persistente.\n3. Aprovechar el certificado sin registro en Active Directory para evadir auditorías.",
+    "mitigation": "Habilitar 'PUBLISH_TO_DS' para todas las plantillas de uso interno y registrar manualmente certificados de uso crítico. Revisar las configuraciones de publicación periódicamente."
+  },
+
+  "ESC7": {
+    "severity": "high",
+    "description": "La CA permite que usuarios o grupos no privilegiados modifiquen sus ACLs (por ejemplo, WRITE_DACL o WRITE_OWNER), permitiendo control total sobre la autoridad certificadora.",
+    "exploitation": "1. Enumerar ACLs de la CA y buscar WRITE_DACL/OWNER en grupos amplios.\n2. Modificar la CA para agregar plantillas vulnerables o emitir certificados arbitrarios.\n3. Escalar privilegios mediante certificados emitidos desde la CA comprometida.",
+    "mitigation": "Revisar los permisos de la CA en 'CN=Enrollment Services' y eliminar WRITE_* de grupos no administrativos. Monitorear cambios en las ACLs con auditoría avanzada de AD CS."
+  },
+
+  "ESC8": {
+    "severity": "high",
+    "description": "El servicio Web Enrollment (Web Enrollment Service) expone interfaces vulnerables a relays NTLM o solicitudes sin autenticación fuerte, permitiendo inscripción abusiva desde sistemas comprometidos.",
+    "exploitation": "1. Detectar el servicio activo (por defecto en /certsrv/).\n2. Ejecutar un ataque relay (por ejemplo con ntlmrelayx) apuntando al endpoint de inscripción.\n3. Obtener un certificado válido con privilegios del usuario autenticado.\n   Ejemplo:\n   ntlmrelayx.py -t http://CA/certsrv/certfnsh.asp -rpc-mode HTTP\n4. Usar el certificado obtenido para autenticación persistente.",
+    "mitigation": "Deshabilitar Web Enrollment si no es necesario. En caso de requerirse, forzar autenticación Kerberos, habilitar Extended Protection y restringir el acceso por IP o grupo de usuarios."
+  }
+}

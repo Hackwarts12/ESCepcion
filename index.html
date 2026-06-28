@@ -10,6 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="timeline-styles.css">
+    <link rel="stylesheet" href="responsive.css">
 </head>
 <body>
     <canvas id="particles"></canvas>
@@ -21,6 +23,11 @@
                     <img src="logo.png" alt="ESCepcion" class="logo-icon-nav">
                     <span class="logo-text">ESCepcion</span>
                 </div>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
                 <ul class="nav-links">
                     <li><a href="#hero">Home</a></li>
                     <li><a href="#escs">ESCs</a></li>
@@ -29,21 +36,36 @@
                     <li><a href="#how">How it Works</a></li>
                     <li><a href="#changelog">Changelog</a></li>
                 </ul>
+                <div class="nav-actions">
+                    <a href="https://github.com/Hackwarts12/ESCepcion" target="_blank" class="github-link">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                        </svg>
+                        GitHub
+                    </a>
+                    <a href="https://ko-fi.com/hackwarts12" target="_blank" class="kofi-link">
+                        🍺 Dona una cerveza
+                    </a>
+                </div>
             </div>
         </nav>
     </header>
 
     <main>
         <section id="hero" class="hero">
-            <div class="container">
+            <div class="hero-left">
                 <div class="hero-content">
-                    <div class="hero-logo">
-                        <img src="logo.png" alt="ESCepcion Logo" class="logo-main">
+                    <div class="hero-header">
+                        <div class="hero-logo">
+                            <img src="logo.png" alt="ESCepcion Logo" class="logo-main">
+                        </div>
+                        <div class="hero-title-wrapper">
+                            <h1 class="glitch" data-text="ESCepcion">ESCepcion</h1>
+                            <p class="tagline">The only AD CS auditing framework that doesn't just find misconfigurations — it tells you which ones actually lead to domain compromise.</p>
+                        </div>
                     </div>
-                    <h1 class="glitch" data-text="ESCepcion">ESCepcion</h1>
-                    <p class="tagline">Audit your AD like a wizard</p>
                     <p class="hero-description">
-                        Active Directory Certificate Services auditing framework — enumerate, analyze, and report every ESC escalation path lurking in your domain infrastructure.
+                        Built for security consultants, blue teams, and auditors who need evidence-grade reports, not just scanner output.
                     </p>
                     <div class="hero-buttons">
                         <a href="#install" class="btn btn-primary">
@@ -52,24 +74,30 @@
                         <a href="https://github.com/Hackwarts12/ESCepcion" class="btn btn-secondary" target="_blank">
                             <span>View on GitHub</span>
                         </a>
+                        <a href="risk-model.html" class="btn btn-secondary">
+                            <span>Risk Model →</span>
+                        </a>
                     </div>
                 </div>
-                <div class="terminal-window" style="margin-top: 4rem;">
+            </div>
+            <div class="hero-right">
+                <div class="terminal-window">
                     <div class="terminal-header">
                         <span class="terminal-dot red"></span>
                         <span class="terminal-dot yellow"></span>
                         <span class="terminal-dot green"></span>
                     </div>
                     <div class="terminal-body">
-                        <p><span class="prompt">$</span> python main.py --domain corp.local --user auditor --password **** --dc-ip 192.168.1.10 --deep-scan</p>
+                        <p><span class="prompt">$</span> python main.py --domain corp.local \</p>
+                        <p>&nbsp;&nbsp;--user auditor --password **** --dc-ip 192.168.1.10</p>
                         <p class="output">[*] Connecting to LDAP — corp.local...</p>
                         <p class="output">[*] Enumerating Certificate Authorities...</p>
-                        <p class="output success">[+] Found CA: CORP-CA on corp-dc01.corp.local</p>
+                        <p class="output success">[+] Found CA: CORP-CA on corp-dc01</p>
                         <p class="output">[*] Scanning 47 certificate templates...</p>
-                        <p class="output success">[!] ESC1 — "UserCert" template is vulnerable (SAN + low-priv)</p>
-                        <p class="output success">[!] ESC4 — "WebServer" template has writable ACL (Domain Users)</p>
-                        <p class="output success">[!] ESC8 — HTTP enrollment endpoint detected at /certsrv/</p>
-                        <p class="output">[+] Audit complete — 3 escalation paths detected in 4.2s</p>
+                        <p class="output success">[!] ESC1 — "UserCert" vulnerable (SAN)</p>
+                        <p class="output success">[!] ESC4 — "WebServer" writable ACL</p>
+                        <p class="output success">[!] ESC8 — HTTP endpoint at /certsrv/</p>
+                        <p class="output">[+] Audit complete — 3 paths in 4.2s</p>
                         <p class="cursor">_</p>
                     </div>
                 </div>
@@ -79,87 +107,119 @@
         <section id="escs" class="escs-section">
             <div class="container">
                 <h2 class="section-title">ESC Coverage</h2>
-                <p class="section-subtitle">ESCepcion detects every known escalation path</p>
+                <p class="section-subtitle">ESCepcion detects every known escalation path. Each finding includes confidence level, blocking controls, and a deterministic exploitability assessment — not just a vulnerable flag.</p>
                 <div class="escs-grid">
                     <div class="esc-card" data-esc="1">
                         <div class="esc-number">ESC1</div>
+                        <span class="esc-badge critical">CRITICAL</span>
+                        <span class="esc-badge method">LDAP + ACL</span>
                         <h3>Misconfigured Certificate Templates</h3>
-                        <p>Templates with Client Auth EKU allow arbitrary SAN + low-priv enrollment — the most exploited ADCS path</p>
+                        <p>Templates with Client Auth EKU allow arbitrary SAN + low-priv enrollment. ESCepcion validates effective enrollment rights using BFS nested group resolution — eliminating false positives from inherited permissions.</p>
                     </div>
                     <div class="esc-card" data-esc="2">
                         <div class="esc-number">ESC2</div>
+                        <span class="esc-badge critical">CRITICAL</span>
+                        <span class="esc-badge method">LDAP + ACL</span>
                         <h3>Any Purpose EKU Abuse</h3>
-                        <p>Templates carrying Any Purpose EKU or no EKU at all can authenticate as any domain user</p>
+                        <p>Templates carrying Any Purpose EKU or no EKU at all can authenticate as any domain user regardless of the requester's privilege level.</p>
                     </div>
                     <div class="esc-card" data-esc="3">
                         <div class="esc-number">ESC3</div>
+                        <span class="esc-badge high">HIGH</span>
+                        <span class="esc-badge method">LDAP + ACL</span>
                         <h3>Enrollment Agent Abuse</h3>
-                        <p>Misconfigured enrollment agent templates allow requesting certificates on behalf of any domain user</p>
+                        <p>Misconfigured enrollment agent templates allow requesting certificates on behalf of any domain user. ESCepcion validates the full two-template chain (Agent + Target) before reporting — avoiding false positives.</p>
                     </div>
                     <div class="esc-card" data-esc="4">
                         <div class="esc-number">ESC4</div>
+                        <span class="esc-badge high">HIGH</span>
+                        <span class="esc-badge method">LDAP + ACL</span>
                         <h3>Template ACL Abuse</h3>
-                        <p>Writable ACLs on certificate templates allow low-priv users to introduce ESC1-style misconfigurations</p>
+                        <p>Writable ACLs on certificate templates allow low-priv users to introduce ESC1-style misconfigurations at will. ESCepcion resolves nested group membership up to depth 5 to identify indirect write access paths.</p>
                     </div>
                     <div class="esc-card" data-esc="5">
                         <div class="esc-number">ESC5</div>
+                        <span class="esc-badge high">HIGH</span>
+                        <span class="esc-badge method">LDAP + ACL</span>
                         <h3>PKI Object ACL Abuse</h3>
-                        <p>Weak ACLs on CAs, NTAuthCertificates, and Root CA objects can compromise the entire PKI</p>
+                        <p>Weak ACLs on CAs, NTAuthCertificates, AIA, CDP, and OID objects can compromise the entire PKI infrastructure. Reported once as a global infrastructure finding, not repeated per template.</p>
                     </div>
                     <div class="esc-card" data-esc="6">
                         <div class="esc-number">ESC6</div>
+                        <span class="esc-badge critical">CRITICAL</span>
+                        <span class="esc-badge method">LDAP + DEEP SCAN</span>
                         <h3>EDITF_ATTRIBUTESUBJECTALTNAME2</h3>
-                        <p>CA-level flag allows SAN in any cert request, bypassing all template restrictions entirely</p>
+                        <p>CA-level flag allows SAN in any cert request, bypassing all template restrictions. Reported as NEAR_MISS via LDAP heuristic; confirmed deterministically via MS-RRP registry read with --deep-scan.</p>
                     </div>
                     <div class="esc-card" data-esc="7">
                         <div class="esc-number">ESC7</div>
+                        <span class="esc-badge high">HIGH</span>
+                        <span class="esc-badge method">LDAP + ACL</span>
                         <h3>Vulnerable CA ACL</h3>
-                        <p>ManageCA / ManageCertificates rights enable arbitrary certificate issuance for any domain account</p>
+                        <p>ManageCA / ManageCertificates rights on the CA object enable arbitrary certificate issuance and template manipulation. ESCepcion checks both permissions independently with LOW_TRUST principal filtering.</p>
                     </div>
                     <div class="esc-card" data-esc="8">
                         <div class="esc-number">ESC8</div>
+                        <span class="esc-badge high">HIGH</span>
+                        <span class="esc-badge method">LDAP + HTTP</span>
                         <h3>NTLM Relay to AD CS HTTP</h3>
-                        <p>HTTP enrollment endpoints allow NTLM relay to obtain machine and domain controller certificates</p>
+                        <p>HTTP enrollment endpoints allow NTLM relay attacks. ESCepcion includes active HTTP probing to confirm endpoint availability and NTLM challenge presence before reporting — no false positives on dead URLs.</p>
                     </div>
                     <div class="esc-card" data-esc="9">
                         <div class="esc-number">ESC9</div>
+                        <span class="esc-badge medium">MEDIUM</span>
+                        <span class="esc-badge method">LDAP</span>
                         <h3>No Security Extension</h3>
-                        <p>Missing szOID_NTDS_CA_SECURITY_EXT enables certificate-to-account mapping abuse for impersonation</p>
+                        <p>CT_FLAG_NO_SECURITY_EXTENSION prevents the CA from embedding the objectSID extension in issued certificates, enabling UPN-based impersonation. ESCepcion cross-validates GenericWrite availability before escalating severity.</p>
                     </div>
                     <div class="esc-card" data-esc="10">
                         <div class="esc-number">ESC10</div>
+                        <span class="esc-badge medium">MEDIUM</span>
+                        <span class="esc-badge method">DEEP SCAN</span>
                         <h3>Weak Certificate Mappings</h3>
-                        <p>Weak CertificateMappingMethods registry settings allow impersonation via strong certificate mappings</p>
+                        <p>Weak StrongCertificateBindingEnforcement or CertificateMappingMethods registry settings allow certificate-to-account impersonation. Confirmed via MS-RRP with --deep-scan; reported as NEAR_MISS otherwise.</p>
                     </div>
                     <div class="esc-card" data-esc="11">
                         <div class="esc-number">ESC11</div>
+                        <span class="esc-badge medium">MEDIUM</span>
+                        <span class="esc-badge method">DEEP SCAN</span>
                         <h3>Unencrypted RPC Interface</h3>
-                        <p>IF_ENFORCEENCRYPTICERTREQUEST disabled allows NTLM relay attacks over the RPC certificate interface</p>
+                        <p>IF_ENFORCEENCRYPTICERTREQUEST disabled allows NTLM relay attacks directly over the RPC certificate enrollment interface — no web enrollment role required on the CA.</p>
                     </div>
                     <div class="esc-card" data-esc="12">
                         <div class="esc-number">ESC12</div>
+                        <span class="esc-badge high">HIGH</span>
+                        <span class="esc-badge method">DEEP SCAN</span>
                         <h3>DCOM Shell Access to CA</h3>
-                        <p>Shell access to the CA server via DCOM enables local privilege escalation on the CA host</p>
+                        <p>ESCepcion attempts remote detection of YubiHSM AuthPassword exposure via MS-RRP registry read. Requires --deep-scan and remote registry access to the CA server host.</p>
                     </div>
                     <div class="esc-card" data-esc="13">
                         <div class="esc-number">ESC13</div>
+                        <span class="esc-badge high">HIGH</span>
+                        <span class="esc-badge method">LDAP</span>
                         <h3>OID Group Link Abuse</h3>
-                        <p>Issuance policies linked to universal groups grant certificate holders covert group membership</p>
+                        <p>Issuance policies linked to universal AD groups via msDS-OIDToGroupLink grant certificate holders covert group membership. ESCepcion validates group type (must be universal and empty) and privilege level before reporting — avoiding false positives.</p>
                     </div>
                     <div class="esc-card" data-esc="14">
                         <div class="esc-number">ESC14</div>
+                        <span class="esc-badge medium">MEDIUM</span>
+                        <span class="esc-badge method">LDAP + ACL</span>
                         <h3>Explicit Certificate Mapping</h3>
-                        <p>Explicit cert-to-account mappings writable by low-priv users allow direct account impersonation</p>
+                        <p>Weak permissions over altSecurityIdentities allow low-priv users to bind arbitrary certificates to privileged accounts. ESCepcion detects all four mapping scenarios: X509RFC822, IssuerSubject, SubjectOnly, and WriteProperty.</p>
                     </div>
                     <div class="esc-card" data-esc="15">
                         <div class="esc-number">ESC15</div>
-                        <h3>SchemaVersion 1 / EKUwu</h3>
-                        <p>SchemaVersion 1 templates silently ignore EKU restrictions, enabling client auth with any certificate</p>
+                        <span class="esc-badge high">HIGH</span>
+                        <span class="esc-badge method">LDAP</span>
+                        <h3>SchemaVersion 1 / EKUwu (CVE-2024-49019)</h3>
+                        <p>SchemaVersion 1 templates allow Application Policy injection in the CSR, silently overriding the template's EKU. Enables client authentication with any V1 template on unpatched CAs.</p>
                     </div>
                     <div class="esc-card" data-esc="16">
                         <div class="esc-number">ESC16</div>
-                        <h3>Advanced Detection</h3>
-                        <p>Additional escalation paths detected via --deep-scan mode</p>
+                        <span class="esc-badge high">HIGH</span>
+                        <span class="esc-badge method">DEEP SCAN</span>
+                        <h3>CA-Wide Security Extension Disabled</h3>
+                        <p>OID 1.3.6.1.4.1.311.25.2 in the CA's DisableExtensionList makes ALL templates behave like ESC9 simultaneously. Confirmed via MS-RRP registry read with --deep-scan. One of the most impactful CA-level misconfigurations.</p>
                     </div>
                 </div>
             </div>
@@ -180,14 +240,19 @@
                         <div class="step-number">02</div>
                         <h3>Basic Audit</h3>
                         <div class="code-block">
-                            <code>python main.py --domain corp.local --user auditor --dc-ip 192.168.1.10 --password 'P@ssw0rd'</code>
+                            <code># Basic domain audit
+python main.py --domain corp.local --user auditor \
+  --dc-ip 192.168.1.10 --password 'P@ssw0rd'</code>
                         </div>
                     </div>
                     <div class="install-card">
                         <div class="step-number">03</div>
                         <h3>Deep Scan</h3>
                         <div class="code-block">
-                            <code>python main.py --domain corp.local --user auditor --dc-ip 192.168.1.10 --password 'P@ssw0rd' --deep-scan</code>
+                            <code># Deep scan — confirms ESC6/10/11/12/16 via MS-RRP
+python main.py --domain corp.local --user auditor \
+  --dc-ip 192.168.1.10 --password 'P@ssw0rd' \
+  --deep-scan</code>
                         </div>
                     </div>
                 </div>
@@ -196,37 +261,47 @@
 
         <section id="features" class="features-section">
             <div class="container">
-                <h2 class="section-title">Capabilities — Arcane Arsenal</h2>
+                <h2 class="section-title">Arcane Arsenal</h2>
                 <div class="features-grid">
                     <div class="feature-card">
                         <div class="feature-icon">🔮</div>
                         <h3>Full AD CS Enumeration</h3>
-                        <p>Automatically maps all Certificate Authorities, templates, ACLs, and PKI objects across your entire AD forest</p>
+                        <p>Maps all Certificate Authorities, templates, ACLs, OID objects, and PKI infrastructure in a single LDAP session. Paginated queries handle enterprise environments with thousands of objects without truncation.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">⚡</div>
                         <h3>ESC1–ESC16 Detection</h3>
-                        <p>Complete coverage of all known ADCS privilege escalation vectors, from template misconfigs to NTLM relay attacks</p>
+                        <p>Complete coverage of all known ADCS privilege escalation vectors. Each finding includes confidence level, blocking controls, and a deterministic exploitability assessment — not just a vulnerable flag.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">�</div>
                         <h3>Flexible Authentication</h3>
-                        <p>Authenticate via NTLM password, Pass-the-Hash, or integrated Windows (SSPI) — no credentials stored in disk or reports</p>
+                        <p>NTLM password, Pass-the-Hash (LM:NT or :NT format), and integrated Windows authentication (SSPI). No credentials are stored in output files or reports.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">�</div>
                         <h3>Rich Grimoire Reports</h3>
-                        <p>Export findings as JSON or a full HTML grimoire with attack context, exploitability ratings, evidence trails, and remediation playbooks</p>
+                        <p>Full HTML dashboard with posture score, attack chains, combo chain correlation, and per-finding remediation playbooks. JSON output ready for SIEM integration and diff-based remediation tracking.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🛡️</div>
                         <h3>Remediation Spells</h3>
-                        <p>Each finding includes step-by-step remediation guidance, PowerShell snippets, and risk prioritization for your team</p>
+                        <p>Each finding includes the exact certutil, PowerShell, or ADSI command to remediate — not generic advice. Prioritized by DDCC exploitability, not just severity.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">�</div>
                         <h3>DDCC — Deterministic Attack Paths</h3>
-                        <p>The DDCC engine builds attack graphs to determine if low-trust users have a real path to domain compromise — not just isolated findings</p>
+                        <p>ESCepcion's proprietary engine builds in-memory attack graphs to determine if a low-trust user has a real path to domain compromise. Separates EXPLOITABLE findings from NEAR_MISS and POTENTIAL — the difference between a critical finding and noise.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌐</div>
+                        <h3>Hybrid Environment Detection</h3>
+                        <p>Detects AD Connect presence, sync account credential risks, and Entra ID tenant exposure via LDAP-only queries. Flags when on-prem ADCS misconfigurations may cascade to Microsoft 365 and Azure cloud resources.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔗</div>
+                        <h3>Combo Chain Correlation</h3>
+                        <p>Automatically correlates multiple ESC findings into named attack chains: Template Takeover (ESC4→ESC1), Certifried Hybrid (Certifried+ESC8), Sync Account Takeover (Shadow Credentials+MSOL), and more.</p>
                     </div>
                 </div>
             </div>
@@ -240,7 +315,7 @@
                         <div class="workflow-number">1</div>
                         <div class="workflow-content">
                             <h3>Discovery</h3>
-                            <p>Connects via LDAP and locates all Certificate Authorities within the target domain or forest</p>
+                            <p>Connects via LDAP and locates all Certificate Authorities within the target domain or forest. Resolves SIDs and nested group membership up to depth 5 for accurate ACL analysis.</p>
                         </div>
                     </div>
                     <div class="workflow-arrow">→</div>
@@ -248,7 +323,7 @@
                         <div class="workflow-number">2</div>
                         <div class="workflow-content">
                             <h3>Enumeration</h3>
-                            <p>Maps every certificate template, ACL entry, CA configuration flag, and PKI object in the environment</p>
+                            <p>Maps every certificate template attribute, ACL entry, CA configuration flag, OID object, and PKI container. Paginated queries handle enterprise-scale environments without object limit truncation.</p>
                         </div>
                     </div>
                     <div class="workflow-arrow">→</div>
@@ -256,70 +331,243 @@
                         <div class="workflow-number">3</div>
                         <div class="workflow-content">
                             <h3>Analysis</h3>
-                            <p>Tests each ESC vector against collected data using rules derived from the latest SpecterOps and Certipy research. The DDCC engine builds attack graphs to separate real threats from theoretical findings</p>
+                            <p>Tests each ESC vector against collected data using validation logic derived from SpecterOps, Certipy, and original research. Each finding receives a confidence level and a list of blocking controls that currently prevent exploitation.</p>
                         </div>
                     </div>
                     <div class="workflow-arrow">→</div>
                     <div class="workflow-step">
                         <div class="workflow-number">4</div>
                         <div class="workflow-content">
+                            <h3>DDCC Engine</h3>
+                            <p>The Deterministic Domain Compromise Check builds an attack graph from all findings. It determines whether a low-trust user has a real step-by-step path to domain compromise and assigns an L1–L5 impact level to each path. NEAR_MISS findings — one prerequisite away from exploitation — are tracked separately from theoretical ones.</p>
+                        </div>
+                    </div>
+                    <div class="workflow-arrow">→</div>
+                    <div class="workflow-step">
+                        <div class="workflow-number">5</div>
+                        <div class="workflow-content">
                             <h3>Reporting</h3>
-                            <p>Generates a structured grimoire with findings, exploitability context, attack chains, and remediation instructions</p>
+                            <p>Generates a structured HTML grimoire and JSON output with posture score (0–100), attack chains, combo correlations, per-finding remediation playbooks, and a coverage map showing which ESCs were evaluated and which require --deep-scan to confirm.</p>
                         </div>
                     </div>
                 </div>
+                <p style="text-align: center; margin-top: 2rem; color: var(--text-muted);">
+                    → <a href="risk-model.html" style="color: var(--secondary); text-decoration: none;">Learn more about the DDCC and L1–L5 Risk Model</a>
+                </p>
             </div>
         </section>
 
-        <section id="contributors" class="contributors-section">
+        <section id="credits" class="credits-section">
             <div class="container">
-                <h2 class="section-title">Contributors & Credits</h2>
-                <div class="credits-content">
-                    <p>ESCepcion is built upon the shoulders of giants:</p>
-                    <ul class="credits-list">
-                        <li><strong>Will Schroeder & Lee Christensen (SpecterOps)</strong> — Original "Certified Pre-Owned" research — the foundation of all modern ADCS security analysis</li>
-                        <li><strong>Oliver Lyak — Certipy</strong> — ESC9/ESC10 original research and Certipy framework. ESCepcion's detection logic draws heavily from his work</li>
-                        <li><strong>Jonas Bülow Knudsen</strong> — ESC13 and ESC14 original research</li>
-                        <li><strong>Justin Bollinger (TrustedSec)</strong> — ESC15/EKUwu (CVE-2024-49019) research</li>
-                    </ul>
+                <h2 class="section-title">Credits & Developer</h2>
+                <div class="credits-grid">
+                    <div class="credits-card">
+                        <div class="card-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
+                        <h3>Research Credits</h3>
+                        <p class="card-description">Built upon groundbreaking research from the community:</p>
+                        <ul class="compact-credits-list">
+                            <li><strong>Will Schroeder & Lee Christensen</strong><br>SpecterOps — "Certified Pre-Owned" (2021)</li>
+                            <li><strong>Oliver Lyak</strong><br>Certipy — ESC9, ESC10, ESC16</li>
+                            <li><strong>Jonas Bülow Knudsen</strong><br>ESC13, ESC14 (2024)</li>
+                            <li><strong>Justin Bollinger</strong><br>TrustedSec — ESC15 / EKUwu (2024)</li>
+                        </ul>
+                    </div>
+                    <div class="developer-card">
+                        <div class="card-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <h3>Developed & Compiled by</h3>
+                        <p class="dev-name">Erick Maldonado — @Hackwarts12</p>
+                        <p class="dev-role">RedSpears Labs — Devel Security, S.A.</p>
+                        <p class="dev-description">Architecture, DDCC engine, L1–L5 risk model, hybrid environment analysis, and full implementation of the ESCepcion framework. Regional Offensive Security Consultant Manager.</p>
+                    </div>
+                    <div class="presentations-card">
+                        <div class="card-icon">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                <line x1="8" y1="21" x2="16" y2="21"></line>
+                                <line x1="12" y1="17" x2="12" y2="21"></line>
+                            </svg>
+                        </div>
+                        <h3>Presented At</h3>
+                        <ul class="presentations-list">
+                            <li>
+                                <span class="event-name">EkoParty BlueSpace 2026</span>
+                                <span class="event-year">2026</span>
+                                <span class="event-location">Buenos Aires, Argentina</span>
+                            </li>
+                            <li>
+                                <span class="event-name">Unknow Conference</span>
+                                <span class="event-year">2025</span>
+                                <span class="event-location">Lima, Peru</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="changelog" class="changelog-section">
             <div class="container">
-                <h2 class="section-title">Changelog</h2>
-                <div class="changelog-timeline">
-                    <div class="changelog-item">
-                        <div class="changelog-date">v1.0.0 - Jun 2026 [Latest]</div>
-                        <div class="changelog-content">
-                            <h3>Initial Public Release</h3>
-                            <ul>
-                                <li>ESC1–ESC8 detection with full logic</li>
-                                <li>ESC10, ESC12, ESC14 via --deep-scan (MS-RRP)</li>
-                                <li>Certifried (CVE-2022-26923) detector</li>
-                                <li>Shadow Credentials enumeration</li>
-                                <li>Hybrid environment detector (Entra ID / AD Connect)</li>
-                                <li>DDCC attack graph engine</li>
-                                <li>HTML grimoire + JSON structured output</li>
-                                <li>BloodHound export (JSON v6)</li>
-                                <li>Pass-the-Hash and SSPI authentication</li>
-                                <li>Posture Score 0–100</li>
-                                <li>Combo Chains correlation (ESC4→ESC1, etc.)</li>
-                            </ul>
+                <h2 class="section-title">The Journey</h2>
+                <p class="section-subtitle">From idea to framework — how ESCepcion evolved.</p>
+                
+                <div class="timeline-horizontal">
+                    <div class="timeline-line"></div>
+                    
+                    <div class="timeline-node" data-milestone="1">
+                        <div class="node-dot"></div>
+                        <div class="node-label">
+                            <span class="node-date">Oct 2024</span>
+                            <span class="node-tag">Origins</span>
                         </div>
                     </div>
-                    <div class="changelog-item">
-                        <div class="changelog-date">Upcoming in v1.1</div>
-                        <div class="changelog-content">
-                            <h3>Roadmap</h3>
-                            <ul>
-                                <li>ESC9, ESC11, ESC13, ESC15, ESC16 full detection</li>
-                                <li>LDAP pagination for enterprise environments</li>
-                                <li>Unified result model (ESCResult schema)</li>
-                                <li>Regression test suite</li>
-                            </ul>
+                    
+                    <div class="timeline-node" data-milestone="2">
+                        <div class="node-dot"></div>
+                        <div class="node-label">
+                            <span class="node-date">Dec 2024</span>
+                            <span class="node-tag">First Build</span>
                         </div>
+                    </div>
+                    
+                    <div class="timeline-node" data-milestone="3">
+                        <div class="node-dot"></div>
+                        <div class="node-label">
+                            <span class="node-date">Feb 2025</span>
+                            <span class="node-tag">Coverage</span>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-node" data-milestone="4">
+                        <div class="node-dot"></div>
+                        <div class="node-label">
+                            <span class="node-date">Apr 2025</span>
+                            <span class="node-tag">Intelligence</span>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-node" data-milestone="5">
+                        <div class="node-dot"></div>
+                        <div class="node-label">
+                            <span class="node-date">Jun 2025</span>
+                            <span class="node-tag">Deep Scan</span>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-node" data-milestone="6">
+                        <div class="node-dot"></div>
+                        <div class="node-label">
+                            <span class="node-date">Aug 2025</span>
+                            <span class="node-tag">Hybrid</span>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-node" data-milestone="7">
+                        <div class="node-dot"></div>
+                        <div class="node-label">
+                            <span class="node-date">Oct 2025</span>
+                            <span class="node-tag">Reporting</span>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-node" data-milestone="8">
+                        <div class="node-dot"></div>
+                        <div class="node-label">
+                            <span class="node-date">Jul 2026</span>
+                            <span class="node-tag">Peru</span>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-node active" data-milestone="11">
+                        <div class="node-dot"></div>
+                        <div class="node-label">
+                            <span class="node-date">Oct 2026</span>
+                            <span class="node-tag">v1.0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-node future" data-milestone="9">
+                        <div class="node-dot"></div>
+                        <div class="node-label">
+                            <span class="node-date">Q3 2026</span>
+                            <span class="node-tag">v1.1</span>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-node future" data-milestone="10">
+                        <div class="node-dot"></div>
+                        <div class="node-label">
+                            <span class="node-date">Q4 2026</span>
+                            <span class="node-tag">v1.2</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-content-area">
+                    <div class="milestone-detail" data-milestone="1">
+                        <h3>The Idea</h3>
+                        <p>Started as an internal script to audit AD CS in client engagements at Devel Security. The goal: a tool that explains risk to non-technical stakeholders, not just dumps LDAP findings.</p>
+                    </div>
+                    
+                    <div class="milestone-detail" data-milestone="2">
+                        <h3>ESC1–ESC4 Core</h3>
+                        <p>First working version with ESC1, ESC2, ESC3, ESC4 detection via LDAP. Basic HTML output. Ran internally on the first real client engagement and surfaced ESC4 findings that were missed by other tools.</p>
+                    </div>
+                    
+                    <div class="milestone-detail" data-milestone="3">
+                        <h3>ESC5–ESC8 + Authentication</h3>
+                        <p>Added ESC5 through ESC8 coverage including active HTTP probing for ESC8. Implemented Pass-the-Hash and SSPI authentication. First version usable without a plaintext password.</p>
+                    </div>
+                    
+                    <div class="milestone-detail" data-milestone="4">
+                        <h3>DDCC Engine + L1–L5 Model</h3>
+                        <p>The Deterministic Domain Compromise Check was designed and implemented. For the first time, ESCepcion could tell the difference between a theoretical finding and a real path to domain compromise. The L1–L5 Identity Impact Taxonomy replaced CVSS scoring.</p>
+                    </div>
+                    
+                    <div class="milestone-detail" data-milestone="5">
+                        <h3>ESC10 / ESC12 / ESC14 + MS-RRP</h3>
+                        <p>Added --deep-scan mode with impacket MS-RRP integration. ESC10 reads StrongCertificateBindingEnforcement and CertificateMappingMethods directly from the DC registry. ESC12 attempts remote YubiHSM detection. ESC14 covers all four altSecurityIdentities scenarios.</p>
+                    </div>
+                    
+                    <div class="milestone-detail" data-milestone="6">
+                        <h3>Certifried + Shadow Credentials + Hybrid Detection</h3>
+                        <p>Added Certifried (CVE-2022-26923) as a standalone detection module. Shadow Credentials enumeration with LOW_TRUST filtering. Hybrid environment detector identifies AD Connect accounts, tenant exposure, and sync account credential risks via LDAP-only queries.</p>
+                    </div>
+                    
+                    <div class="milestone-detail" data-milestone="7">
+                        <h3>HTML Grimoire + BloodHound Export</h3>
+                        <p>Complete redesign of the HTML report. Posture Score 0–100, attack chain visualization, combo chain correlation, and per-finding remediation playbooks with exact certutil and PowerShell commands. BloodHound JSON v6 export added.</p>
+                    </div>
+                    
+                    <div class="milestone-detail" data-milestone="8">
+                        <h3>Unknow Conference 2026 — Lima, Peru</h3>
+                        <p>First presentation at Unknow Conference, Lima. Introduction to ESCepcion framework, DDCC engine demonstration, and L1–L5 risk model explanation for the Latin American security community.</p>
+                    </div>
+                    
+                    <div class="milestone-detail active" data-milestone="11">
+                        <h3>Public Release — EkoParty BlueSpace 2026</h3>
+                        <p>Official public release presented at EkoParty BlueSpace, Buenos Aires. ESC1–ESC8 full logic, ESC10/12/14 via deep scan, Certifried, Shadow Credentials, Hybrid Detection, DDCC, L1–L5, Posture Score, Combo Chains, BloodHound export, HTML grimoire, JSON output.</p>
+                    </div>
+                    
+                    <div class="milestone-detail" data-milestone="9">
+                        <h3>Full ESC Coverage + Hardening</h3>
+                        <p>ESC9, ESC11, ESC13, ESC15, ESC16 with full detection logic and anti-false-positive validation. Global LDAP pagination for enterprise environments. Unified ESCResult schema with confidence levels, blocking controls, and evidence fields. Regression test suite with domain fixtures. LDAPS support (port 636).</p>
+                    </div>
+                    
+                    <div class="milestone-detail" data-milestone="10">
+                        <h3>Risk Engine Expansion</h3>
+                        <p>MITRE ATT&CK mapping per ESC finding. --diff mode for remediation tracking between scans. SARIF export for CI/CD pipeline integration. Remediation Priority Engine: what to fix first to break the maximum number of DDCC paths.</p>
                     </div>
                 </div>
             </div>
@@ -332,7 +580,7 @@
                 <div class="footer-section">
                     <h4>ESCepcion</h4>
                     <p>Audit your AD like a wizard</p>
-                    <p style="margin-top: 0.5rem; font-size: 0.9rem;">RedSpears Labs — Devel Security</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem;">RedSpears Labs — Devel Security, S.A.</p>
                 </div>
                 <div class="footer-section">
                     <h4>Links</h4>
@@ -346,6 +594,7 @@
                     <h4>Legal</h4>
                     <p>⚠️ For authorized security testing only.</p>
                     <p style="margin-top: 0.5rem; font-size: 0.85rem;">Use only in environments where you have explicit written authorization. Unauthorized use may be illegal.</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.85rem;">ESCepcion does not exploit, modify, or write to any Active Directory object. All operations are read-only LDAP queries and optional registry reads via MS-RRP.</p>
                 </div>
             </div>
             <div class="footer-bottom">
