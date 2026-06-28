@@ -1,0 +1,32 @@
+name: Security Check
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Check for secrets
+      uses: trufflesecurity/trufflehog@main
+      with:
+        path: ./
+        base: ${{ github.event.repository.default_branch }}
+        head: HEAD
+    
+    - name: Run security headers check
+      run: |
+        echo "Security headers configured in netlify.toml"
+        cat netlify.toml
+    
+    - name: Validate HTML
+      run: |
+        echo "HTML validation - checking for security issues"
+        grep -i "Content-Security-Policy" index.html || echo "Warning: CSP not found in HTML"

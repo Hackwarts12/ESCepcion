@@ -1,0 +1,66 @@
+# Security Configuration Guide for ESCepcion
+
+## HTTPS Configuration
+
+### GitHub Pages
+- Automáticamente habilitado
+- Forzar HTTPS en Settings > Pages > Enforce HTTPS
+
+### Netlify
+- HTTPS automático con Let's Encrypt
+- Configurado en netlify.toml
+
+## Security Headers
+
+Los siguientes headers están configurados en netlify.toml:
+
+1. **Strict-Transport-Security (HSTS)**
+   - Fuerza HTTPS por 1 año
+   - Incluye subdominios
+   - Preload habilitado
+
+2. **X-Frame-Options**
+   - DENY: Previene clickjacking
+
+3. **X-Content-Type-Options**
+   - nosniff: Previene MIME type sniffing
+
+4. **X-XSS-Protection**
+   - Habilita protección XSS del navegador
+
+5. **Content-Security-Policy (CSP)**
+   - Controla qué recursos pueden cargarse
+   - Previene XSS y ataques de inyección
+
+6. **Referrer-Policy**
+   - Controla información de referrer
+
+7. **Permissions-Policy**
+   - Deshabilita APIs sensibles (geolocation, camera, mic)
+
+## Best Practices
+
+### Para Desarrollo
+- Nunca commitear secretos o API keys
+- Usar variables de entorno (.env)
+- Validar todas las entradas de usuario
+- Sanitizar outputs
+
+### Para Producción
+- Habilitar HTTPS obligatorio
+- Configurar todos los security headers
+- Implementar rate limiting si hay APIs
+- Monitorear logs de seguridad
+- Mantener dependencias actualizadas
+
+## Testing de Seguridad
+
+Herramientas recomendadas:
+- https://securityheaders.com/
+- https://observatory.mozilla.org/
+- OWASP ZAP
+- Burp Suite
+
+## Contacto de Seguridad
+
+Para reportar vulnerabilidades, contactar a través del repositorio de GitHub.
