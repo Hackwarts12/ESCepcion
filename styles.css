@@ -327,8 +327,8 @@ section {
 
 .escs-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
     margin-top: 3rem;
 }
 
@@ -336,10 +336,11 @@ section {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
     border-radius: 12px;
-    padding: 2rem;
-    transition: all 0.3s ease;
+    padding: 1.5rem;
+    transition: all 0.25s ease;
     position: relative;
     overflow: hidden;
+    cursor: default;
 }
 
 .esc-card::before {
@@ -347,40 +348,64 @@ section {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, var(--neon-purple), var(--neon-cyan));
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    right: 0;
+    height: 2px;
+    background: var(--neon-purple);
+    opacity: 0.8;
+}
+
+.esc-card[data-esc="1"]::before,
+.esc-card[data-esc="2"]::before,
+.esc-card[data-esc="6"]::before {
+    background: #ef4444;
+}
+
+.esc-card[data-esc="3"]::before,
+.esc-card[data-esc="4"]::before,
+.esc-card[data-esc="5"]::before,
+.esc-card[data-esc="7"]::before,
+.esc-card[data-esc="8"]::before,
+.esc-card[data-esc="12"]::before,
+.esc-card[data-esc="13"]::before,
+.esc-card[data-esc="15"]::before {
+    background: #f97316;
+}
+
+.esc-card[data-esc="9"]::before,
+.esc-card[data-esc="10"]::before,
+.esc-card[data-esc="11"]::before,
+.esc-card[data-esc="14"]::before,
+.esc-card[data-esc="16"]::before {
+    background: #eab308;
 }
 
 .esc-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 40px rgba(168, 85, 247, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 24px rgba(168, 85, 247, 0.12);
     border-color: var(--neon-purple);
 }
 
-.esc-card:hover::before {
-    opacity: 0.1;
-}
-
 .esc-number {
-    font-size: 2rem;
-    font-weight: bold;
+    font-size: 0.9rem;
+    font-weight: 700;
     color: var(--neon-purple);
-    margin-bottom: 1rem;
-    text-shadow: 0 0 10px var(--neon-purple);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.5px;
+    font-family: 'Courier New', monospace;
 }
 
 .esc-card h3 {
     color: var(--text-primary);
     margin-bottom: 0.5rem;
-    font-size: 1.2rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.4;
 }
 
 .esc-card p {
     color: var(--text-secondary);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    line-height: 1.65;
 }
 
 .install-grid {
