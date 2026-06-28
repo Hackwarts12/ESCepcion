@@ -155,6 +155,26 @@ main {
     z-index: 1;
 }
 
+.hero-logo {
+    margin-bottom: 2rem;
+    animation: float 7s ease-in-out infinite;
+}
+
+.logo-main {
+    width: 200px;
+    height: auto;
+    filter: drop-shadow(0 0 30px rgba(168, 85, 247, 0.4));
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-14px);
+    }
+}
+
 .glitch {
     font-family: 'Cinzel', serif;
     font-size: clamp(48px, 8vw, 88px);
