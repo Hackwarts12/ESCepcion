@@ -43,7 +43,7 @@
                     <h1 class="glitch" data-text="ESCepcion">ESCepcion</h1>
                     <p class="tagline">Audit your AD like a wizard</p>
                     <p class="hero-description">
-                        Herramienta mágica para auditoría de Active Directory. Detecta y explota vulnerabilidades ESC con el poder de la arcana digital.
+                        Active Directory Certificate Services auditing framework — enumerate, analyze, and report every ESC escalation path lurking in your domain infrastructure.
                     </p>
                     <div class="hero-buttons">
                         <a href="#install" class="btn btn-primary">
@@ -61,11 +61,15 @@
                         <span class="terminal-dot green"></span>
                     </div>
                     <div class="terminal-body">
-                        <p><span class="prompt">$</span> python escepcion.py --scan</p>
-                        <p class="output">[+] Scanning Active Directory...</p>
-                        <p class="output success">[✓] ESC1 vulnerability detected!</p>
-                        <p class="output success">[✓] ESC2 vulnerability detected!</p>
-                        <p class="output">[+] Generating exploit...</p>
+                        <p><span class="prompt">$</span> python main.py --domain corp.local --user auditor --password **** --dc-ip 192.168.1.10 --deep-scan</p>
+                        <p class="output">[*] Connecting to LDAP — corp.local...</p>
+                        <p class="output">[*] Enumerating Certificate Authorities...</p>
+                        <p class="output success">[+] Found CA: CORP-CA on corp-dc01.corp.local</p>
+                        <p class="output">[*] Scanning 47 certificate templates...</p>
+                        <p class="output success">[!] ESC1 — "UserCert" template is vulnerable (SAN + low-priv)</p>
+                        <p class="output success">[!] ESC4 — "WebServer" template has writable ACL (Domain Users)</p>
+                        <p class="output success">[!] ESC8 — HTTP enrollment endpoint detected at /certsrv/</p>
+                        <p class="output">[+] Audit complete — 3 escalation paths detected in 4.2s</p>
                         <p class="cursor">_</p>
                     </div>
                 </div>
@@ -74,68 +78,88 @@
 
         <section id="escs" class="escs-section">
             <div class="container">
-                <h2 class="section-title">Supported ESC Vulnerabilities</h2>
-                <p class="section-subtitle">All known Active Directory Certificate Services escalation paths</p>
+                <h2 class="section-title">ESC Coverage</h2>
+                <p class="section-subtitle">ESCepcion detects every known escalation path</p>
                 <div class="escs-grid">
                     <div class="esc-card" data-esc="1">
                         <div class="esc-number">ESC1</div>
                         <h3>Misconfigured Certificate Templates</h3>
-                        <p>Exploits templates with ENROLLEE_SUPPLIES_SUBJECT flag</p>
+                        <p>Templates with Client Auth EKU allow arbitrary SAN + low-priv enrollment — the most exploited ADCS path</p>
                     </div>
                     <div class="esc-card" data-esc="2">
                         <div class="esc-number">ESC2</div>
-                        <h3>Any Purpose EKU</h3>
-                        <p>Certificates with Any Purpose or no EKU restrictions</p>
+                        <h3>Any Purpose EKU Abuse</h3>
+                        <p>Templates carrying Any Purpose EKU or no EKU at all can authenticate as any domain user</p>
                     </div>
                     <div class="esc-card" data-esc="3">
                         <div class="esc-number">ESC3</div>
-                        <h3>Enrollment Agent Templates</h3>
-                        <p>Certificate Request Agent abuse for privilege escalation</p>
+                        <h3>Enrollment Agent Abuse</h3>
+                        <p>Misconfigured enrollment agent templates allow requesting certificates on behalf of any domain user</p>
                     </div>
                     <div class="esc-card" data-esc="4">
                         <div class="esc-number">ESC4</div>
-                        <h3>Vulnerable ACLs</h3>
-                        <p>Weak permissions on certificate templates</p>
+                        <h3>Template ACL Abuse</h3>
+                        <p>Writable ACLs on certificate templates allow low-priv users to introduce ESC1-style misconfigurations</p>
                     </div>
                     <div class="esc-card" data-esc="5">
                         <div class="esc-number">ESC5</div>
-                        <h3>PKI Object ACLs</h3>
-                        <p>Vulnerable permissions on PKI objects</p>
+                        <h3>PKI Object ACL Abuse</h3>
+                        <p>Weak ACLs on CAs, NTAuthCertificates, and Root CA objects can compromise the entire PKI</p>
                     </div>
                     <div class="esc-card" data-esc="6">
                         <div class="esc-number">ESC6</div>
                         <h3>EDITF_ATTRIBUTESUBJECTALTNAME2</h3>
-                        <p>CA configuration allowing SAN specification</p>
+                        <p>CA-level flag allows SAN in any cert request, bypassing all template restrictions entirely</p>
                     </div>
                     <div class="esc-card" data-esc="7">
                         <div class="esc-number">ESC7</div>
-                        <h3>Vulnerable CA ACLs</h3>
-                        <p>Weak permissions on Certificate Authority</p>
+                        <h3>Vulnerable CA ACL</h3>
+                        <p>ManageCA / ManageCertificates rights enable arbitrary certificate issuance for any domain account</p>
                     </div>
                     <div class="esc-card" data-esc="8">
                         <div class="esc-number">ESC8</div>
-                        <h3>NTLM Relay to AD CS</h3>
-                        <p>HTTP enrollment endpoints vulnerable to relay</p>
+                        <h3>NTLM Relay to AD CS HTTP</h3>
+                        <p>HTTP enrollment endpoints allow NTLM relay to obtain machine and domain controller certificates</p>
                     </div>
                     <div class="esc-card" data-esc="9">
                         <div class="esc-number">ESC9</div>
                         <h3>No Security Extension</h3>
-                        <p>CT_FLAG_NO_SECURITY_EXTENSION flag abuse</p>
+                        <p>Missing szOID_NTDS_CA_SECURITY_EXT enables certificate-to-account mapping abuse for impersonation</p>
                     </div>
                     <div class="esc-card" data-esc="10">
                         <div class="esc-number">ESC10</div>
                         <h3>Weak Certificate Mappings</h3>
-                        <p>Vulnerable certificate authentication mappings</p>
+                        <p>Weak CertificateMappingMethods registry settings allow impersonation via strong certificate mappings</p>
                     </div>
                     <div class="esc-card" data-esc="11">
                         <div class="esc-number">ESC11</div>
-                        <h3>IF_ENFORCEENCRYPTICERTREQUEST</h3>
-                        <p>Relay attacks via RPC certificate enrollment</p>
+                        <h3>Unencrypted RPC Interface</h3>
+                        <p>IF_ENFORCEENCRYPTICERTREQUEST disabled allows NTLM relay attacks over the RPC certificate interface</p>
+                    </div>
+                    <div class="esc-card" data-esc="12">
+                        <div class="esc-number">ESC12</div>
+                        <h3>DCOM Shell Access to CA</h3>
+                        <p>Shell access to the CA server via DCOM enables local privilege escalation on the CA host</p>
                     </div>
                     <div class="esc-card" data-esc="13">
                         <div class="esc-number">ESC13</div>
-                        <h3>Issuance Policy Abuse</h3>
-                        <p>OID group link vulnerabilities</p>
+                        <h3>OID Group Link Abuse</h3>
+                        <p>Issuance policies linked to universal groups grant certificate holders covert group membership</p>
+                    </div>
+                    <div class="esc-card" data-esc="14">
+                        <div class="esc-number">ESC14</div>
+                        <h3>Explicit Certificate Mapping</h3>
+                        <p>Explicit cert-to-account mappings writable by low-priv users allow direct account impersonation</p>
+                    </div>
+                    <div class="esc-card" data-esc="15">
+                        <div class="esc-number">ESC15</div>
+                        <h3>SchemaVersion 1 / EKUwu</h3>
+                        <p>SchemaVersion 1 templates silently ignore EKU restrictions, enabling client auth with any certificate</p>
+                    </div>
+                    <div class="esc-card" data-esc="16">
+                        <div class="esc-number">ESC16</div>
+                        <h3>Advanced Detection</h3>
+                        <p>Additional escalation paths detected via --deep-scan mode</p>
                     </div>
                 </div>
             </div>
@@ -149,21 +173,21 @@
                         <div class="step-number">01</div>
                         <h3>Clone Repository</h3>
                         <div class="code-block">
-                            <code>git clone https://github.com/Hackwarts12/ESCepcion.git</code>
+                            <code>git clone https://github.com/Hackwarts12/ESCepcion.git<br>cd ESCepcion<br>pip install -r requirements.txt</code>
                         </div>
                     </div>
                     <div class="install-card">
                         <div class="step-number">02</div>
-                        <h3>Install Dependencies</h3>
+                        <h3>Basic Audit</h3>
                         <div class="code-block">
-                            <code>cd ESCepcion && pip install -r requirements.txt</code>
+                            <code>python main.py --domain corp.local --user auditor --dc-ip 192.168.1.10 --password 'P@ssw0rd'</code>
                         </div>
                     </div>
                     <div class="install-card">
                         <div class="step-number">03</div>
-                        <h3>Run ESCepcion</h3>
+                        <h3>Deep Scan</h3>
                         <div class="code-block">
-                            <code>python escepcion.py --scan --target domain.local</code>
+                            <code>python main.py --domain corp.local --user auditor --dc-ip 192.168.1.10 --password 'P@ssw0rd' --deep-scan</code>
                         </div>
                     </div>
                 </div>
@@ -172,37 +196,37 @@
 
         <section id="features" class="features-section">
             <div class="container">
-                <h2 class="section-title">Arcane Features</h2>
+                <h2 class="section-title">Capabilities — Arcane Arsenal</h2>
                 <div class="features-grid">
                     <div class="feature-card">
                         <div class="feature-icon">🔮</div>
-                        <h3>Automated Detection</h3>
-                        <p>Automatically scans and identifies all ESC vulnerabilities in your Active Directory environment</p>
+                        <h3>Full AD CS Enumeration</h3>
+                        <p>Automatically maps all Certificate Authorities, templates, ACLs, and PKI objects across your entire AD forest</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">⚡</div>
-                        <h3>Exploit Generation</h3>
-                        <p>Generates ready-to-use exploits for detected vulnerabilities with detailed instructions</p>
+                        <h3>ESC1–ESC16 Detection</h3>
+                        <p>Complete coverage of all known ADCS privilege escalation vectors, from template misconfigs to NTLM relay attacks</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">�</div>
+                        <h3>Flexible Authentication</h3>
+                        <p>Authenticate via NTLM password, Pass-the-Hash, or integrated Windows (SSPI) — no credentials stored in disk or reports</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">�</div>
+                        <h3>Rich Grimoire Reports</h3>
+                        <p>Export findings as JSON or a full HTML grimoire with attack context, exploitability ratings, evidence trails, and remediation playbooks</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">🛡️</div>
-                        <h3>Remediation Guidance</h3>
-                        <p>Provides step-by-step remediation recommendations for each vulnerability found</p>
+                        <h3>Remediation Spells</h3>
+                        <p>Each finding includes step-by-step remediation guidance, PowerShell snippets, and risk prioritization for your team</p>
                     </div>
                     <div class="feature-card">
-                        <div class="feature-icon">📊</div>
-                        <h3>Detailed Reports</h3>
-                        <p>Comprehensive HTML and JSON reports with risk scoring and prioritization</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🎯</div>
-                        <h3>Stealth Mode</h3>
-                        <p>Low-noise scanning techniques to avoid detection by security monitoring tools</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🔗</div>
-                        <h3>Chain Attacks</h3>
-                        <p>Identifies and chains multiple vulnerabilities for maximum impact scenarios</p>
+                        <div class="feature-icon">�</div>
+                        <h3>DDCC — Deterministic Attack Paths</h3>
+                        <p>The DDCC engine builds attack graphs to determine if low-trust users have a real path to domain compromise — not just isolated findings</p>
                     </div>
                 </div>
             </div>
@@ -210,29 +234,29 @@
 
         <section id="how" class="how-section">
             <div class="container">
-                <h2 class="section-title">How It Works</h2>
+                <h2 class="section-title">How It Works — The Ritual</h2>
                 <div class="workflow">
                     <div class="workflow-step">
                         <div class="workflow-number">1</div>
                         <div class="workflow-content">
-                            <h3>Reconnaissance</h3>
-                            <p>ESCepcion connects to your AD environment and enumerates all Certificate Services infrastructure</p>
+                            <h3>Discovery</h3>
+                            <p>Connects via LDAP and locates all Certificate Authorities within the target domain or forest</p>
                         </div>
                     </div>
                     <div class="workflow-arrow">→</div>
                     <div class="workflow-step">
                         <div class="workflow-number">2</div>
                         <div class="workflow-content">
-                            <h3>Analysis</h3>
-                            <p>Analyzes certificate templates, CA configurations, and ACLs to identify misconfigurations</p>
+                            <h3>Enumeration</h3>
+                            <p>Maps every certificate template, ACL entry, CA configuration flag, and PKI object in the environment</p>
                         </div>
                     </div>
                     <div class="workflow-arrow">→</div>
                     <div class="workflow-step">
                         <div class="workflow-number">3</div>
                         <div class="workflow-content">
-                            <h3>Exploitation</h3>
-                            <p>Generates proof-of-concept exploits and provides detailed attack paths</p>
+                            <h3>Analysis</h3>
+                            <p>Tests each ESC vector against collected data using rules derived from the latest SpecterOps and Certipy research. The DDCC engine builds attack graphs to separate real threats from theoretical findings</p>
                         </div>
                     </div>
                     <div class="workflow-arrow">→</div>
@@ -240,7 +264,7 @@
                         <div class="workflow-number">4</div>
                         <div class="workflow-content">
                             <h3>Reporting</h3>
-                            <p>Delivers comprehensive reports with remediation steps and risk assessments</p>
+                            <p>Generates a structured grimoire with findings, exploitability context, attack chains, and remediation instructions</p>
                         </div>
                     </div>
                 </div>
@@ -251,12 +275,12 @@
             <div class="container">
                 <h2 class="section-title">Contributors & Credits</h2>
                 <div class="credits-content">
-                    <p>ESCepcion is built upon the research and tools from the security community:</p>
+                    <p>ESCepcion is built upon the shoulders of giants:</p>
                     <ul class="credits-list">
-                        <li><strong>Will Schroeder & Lee Christensen</strong> - Original ESC research (SpecterOps)</li>
-                        <li><strong>Certipy</strong> - Inspiration for AD CS auditing techniques</li>
-                        <li><strong>Certify</strong> - Certificate template enumeration methods</li>
-                        <li><strong>The Security Community</strong> - Continuous research and improvements</li>
+                        <li><strong>Will Schroeder & Lee Christensen (SpecterOps)</strong> — Original "Certified Pre-Owned" research — the foundation of all modern ADCS security analysis</li>
+                        <li><strong>Oliver Lyak — Certipy</strong> — ESC9/ESC10 original research and Certipy framework. ESCepcion's detection logic draws heavily from his work</li>
+                        <li><strong>Jonas Bülow Knudsen</strong> — ESC13 and ESC14 original research</li>
+                        <li><strong>Justin Bollinger (TrustedSec)</strong> — ESC15/EKUwu (CVE-2024-49019) research</li>
                     </ul>
                 </div>
             </div>
@@ -267,14 +291,33 @@
                 <h2 class="section-title">Changelog</h2>
                 <div class="changelog-timeline">
                     <div class="changelog-item">
-                        <div class="changelog-date">v1.0.0 - 2026-06-27</div>
+                        <div class="changelog-date">v1.0.0 - Jun 2026 [Latest]</div>
                         <div class="changelog-content">
-                            <h3>Initial Release</h3>
+                            <h3>Initial Public Release</h3>
                             <ul>
-                                <li>Support for ESC1-ESC11 and ESC13 detection</li>
-                                <li>Automated exploit generation</li>
-                                <li>HTML and JSON reporting</li>
-                                <li>Stealth scanning capabilities</li>
+                                <li>ESC1–ESC8 detection with full logic</li>
+                                <li>ESC10, ESC12, ESC14 via --deep-scan (MS-RRP)</li>
+                                <li>Certifried (CVE-2022-26923) detector</li>
+                                <li>Shadow Credentials enumeration</li>
+                                <li>Hybrid environment detector (Entra ID / AD Connect)</li>
+                                <li>DDCC attack graph engine</li>
+                                <li>HTML grimoire + JSON structured output</li>
+                                <li>BloodHound export (JSON v6)</li>
+                                <li>Pass-the-Hash and SSPI authentication</li>
+                                <li>Posture Score 0–100</li>
+                                <li>Combo Chains correlation (ESC4→ESC1, etc.)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="changelog-item">
+                        <div class="changelog-date">Upcoming in v1.1</div>
+                        <div class="changelog-content">
+                            <h3>Roadmap</h3>
+                            <ul>
+                                <li>ESC9, ESC11, ESC13, ESC15, ESC16 full detection</li>
+                                <li>LDAP pagination for enterprise environments</li>
+                                <li>Unified result model (ESCResult schema)</li>
+                                <li>Regression test suite</li>
                             </ul>
                         </div>
                     </div>
@@ -289,6 +332,7 @@
                 <div class="footer-section">
                     <h4>ESCepcion</h4>
                     <p>Audit your AD like a wizard</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.9rem;">RedSpears Labs — Devel Security</p>
                 </div>
                 <div class="footer-section">
                     <h4>Links</h4>
@@ -300,7 +344,8 @@
                 </div>
                 <div class="footer-section">
                     <h4>Legal</h4>
-                    <p>For authorized security testing only. Use responsibly.</p>
+                    <p>⚠️ For authorized security testing only.</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.85rem;">Use only in environments where you have explicit written authorization. Unauthorized use may be illegal.</p>
                 </div>
             </div>
             <div class="footer-bottom">
